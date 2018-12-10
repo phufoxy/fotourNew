@@ -1,0 +1,23 @@
+{% extends 'home/base.html' %} {% block title %}Home{% endblock %} {% block body %} {% load static %}
+<div id="albums" class="padding-top-bottom">
+    <h1 class="text-center title">Album</h1>
+    {% for i in album_Tour %}
+    <div class="box-img">
+        <img src="{{ i.img_album.url }}" alt="Tour 1">
+        <div class="content">
+            <div class="description">
+                <h1>Place: Da Nang</h1>
+                <p>Date: {{ i.date_up|date:'d-m-Y H:i' }}</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="box-img">
+        <form action="{% url 'upload_album' book_Tour.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="file" class="form-control" name="myFile">
+            <input type="submit" value="submit" class="btn">
+        </form>
+    </div>
+</div>
+{% endblock %}

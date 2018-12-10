@@ -1,0 +1,41 @@
+{% load widget_tweaks %}
+
+<div class="modal-header">
+    <h3 class="modal-title">Place Info</h3>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+
+    <div class="">
+        Name:
+        {{ place.name_place }}
+    </div>
+    <div class="">
+        <img src="{{ place.image_place.url }}" alt="" width="100px" height="100px">
+    </div>
+    <div class="">
+        Review:
+        {{ place.review }}
+        view
+    </div>
+    <div class="">
+        Price:
+        {{ place.price }}
+    </div>
+    <div class="">
+        Type:
+        {{ place.type_place }}
+    </div>
+    <div class="">
+        City:
+        {{ place.address }} - {{ place.city }}
+    </div>
+
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+</div>

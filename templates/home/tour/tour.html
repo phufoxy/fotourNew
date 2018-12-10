@@ -1,0 +1,214 @@
+{% extends 'home/base.html' %} {% block title %}Home{% endblock %} {% block body %} {% load static %}
+{% load humanize %}
+{% for message in messages %}
+<div class="alert {{ message.tags }} alert-dismissible" role="alert" id="message">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+    {% if message == "Please sign in to book." %}
+    <a href="/login/?next={{ request.path }}" class="lang" key="login">Login</a>
+    {% endif %}
+</div>
+{% endfor %}
+<div id="tours" class="padding-top-bottom">
+    <div class="search-tour" id="search-tour">
+        <!-- <p><a href="#ex1" rel="modal:open" class="btn btn-danger">Book Tour</a></p> -->
+        <a href="#ex2" rel="modal:open" class="btn btn-danger"><i class="fas fa-search-plus"></i></a>
+        <div id="ex2" class="modal" style="width: 100%;">
+            <div class="modal-header">
+                <h3>Find Tour</h3>
+            </div>
+            <form action="{% url 'tour_mutil' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <select class="form-control" name="city_tour">
+                        <option selected="true" value="" disabled="disabled">Choose City</option>
+                        {% for i in tour_city %}
+                        <option value="{{ i.city }}">{{ i.city }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group input-content">
+                    <select class="form-control" name="price" style="background: transparent;">
+                        <option selected="true" value="" disabled="disabled">Choose Price</option>
+                        <option value="1000000">Dưới 1 Triệu</option>
+                        <option value="2000000">Dưới 2 Triệu</option>
+                        <option value="3000000">Dưới 3 Triệu</option>
+                        <option value="4000000">Dưới 4 Triệu</option>
+                        <option value="5000000">Dưới 5 Triệu</option>
+                        <option value="6000000">Dưới 6 Triệu</option>
+                        <option value="50000000">Trên 10 Triệu</option>
+                    </select>
+                </div>
+                <div class="form-group input-content">
+                    <select class="form-control" name="person" style="background: transparent;">
+                        <option selected="true" value="" disabled="disabled">Choose Person</option>
+                        <option value="1 and 2">1 Người </option>
+                        <option value="2 and 3">2 Người</option>
+                        <option value="3 and 5">3 Người -> 5 Người</option>
+                        <option value="5 and 10">5 Người -> 10 Người</option>
+                        <option value="10 and 20">10 Người Trở Lên</option>
+                    </select>
+                </div>
+                <div class="form-group input-content">
+                    <select class="form-control" name="date" style="background: transparent;">
+                        <option selected="true" value="" disabled="disabled">Choose Date</option>
+                        <option value="1">1 Ngày/Đêm</option>
+                        <option value="2">2 Ngày/Đêm</option>
+                        <option value="3">3 Ngày/Đêm</option>
+                        <option value="4">4 Ngày/Đêm</option>
+                        <option value="5">5 Ngày/Đêm</option>
+                        <option value="6">6 Ngày/Đêm</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Search Tour" class="btn btn-danger">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="boxes_tour">
+        {% for i in context %}
+        <div class="box animation-to-top">
+            <div class="add-book">
+                <!-- Link to open the modal -->
+                <p><a href="#{{ i.tour_id }}" rel="modal:open" class="btn btn-danger">Book Tour</a></p>
+            </div>
+            <div id="{{ i.tour_id }}" class="modal" style="width: 100%;">
+                <form action="{% url 'add_tour' i.tour_id %}" method="POST">
+                    <h1>{{ i.tour_id }}</h1>
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Date To</label>
+                        <input type="date" class="form-control" id="exampleFormControlInput1" name="date">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Name Tour</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" value="{{ i.tour.name_tour }}"
+                            disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Price Total/Person</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" value="{{ i.total_price|intcomma }} VNĐ/ {{ i.person }} Person"
+                            disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Price Total</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" value="{{ i.sum_price|intcomma }} VNĐ"
+                            disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Name Book: </label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" name="person_book"
+                            placeholder="Enter Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Phone:</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" name="phone" placeholder="Enter Phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Email:</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" name="email" placeholder="Enter Email">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Add book" class="btn btn-danger">
+                    </div>
+                </form>
+            </div>
+            <img src="{{ i.tour.image_tour.url }}" alt="Image Folder One">
+            <div class="description to-top-height">
+                <a href="{% url 'tour_details' i.tour.id  %}" class="seen"><i class="fas fa-share-square"></i></a>
+                <h3>{{ i.tour.type_tour }}</h3>
+                <h1>{{ i.tour.name_tour }} </h1>
+                <p id="price_text" class="text-info">{{ i.sum_price|intcomma }} VNĐ</p>
+                <p class="text-norm">{{ i.person }} Người / {{ i.date_tour }} Ngày </p>
+
+            </div>
+        </div>
+        {% endfor %}
+        <div class="pagination">
+            <nav style="margin: 0 auto">
+                {% if context.has_other_pages %}
+                <ul class="pagination">
+                    {% if context.has_previous %}
+                    <li class="page-item ">
+                        <a href="?page={{ context.previous_page_number }}">
+                            <span class="page-link">Previous</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a href="avascript:void(0)">
+                            <span class="page-link">Previous</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% for i in context.paginator.page_range %}
+                    {% if context.number == i %}
+                    <li class="page-item active">
+                        <a href="?page={{ i }}">
+                            <span class="page-link">
+                                {{ i }}
+                                <span class="sr-only">(current)</span>
+                            </span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if context.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ context.next_page_number }}">Next</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                {% endif %}
+            </nav>
+        </div>
+    </div>
+    <div class="find-form">
+        <form action="{% url 'search_tour' %}" method="POST">
+            {% csrf_token %}
+            <h1 class="title-form">find your tour</h1>
+            <select class="form-control" name="city">
+                <option value="all">All</option>
+                {% for i in tour_city %}
+                <option value="{{ i.city }}">{{ i.city }}</option>
+                {% endfor %}
+            </select>
+
+            <input type="submit" class="btn btn-danger" value="find fights">
+        </form>
+        <div class="categories">
+            <h1>tour</h1>
+            <ul>
+                {% for i in place_tour %}
+                <li>
+                    <h3>{{ i.name_tour }}/ {{ i.city }} / {{ i.sum_price|intcomma }} VNĐ</h3>
+
+                    <h6>( {{ i.person }} Người / {{ i.date_tour }} Ngày)</h6>
+                    <p> <a href="{% url 'tour_details' i.tour_id  %}" class="btn btn-danger">Seem</a>
+                    </p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="tab-cloud">
+            <h1>tag clound</h1>
+            <div class="tabs">
+                {% for i in tour_city %}
+                <a href="{% url 'search_tour_place' i.city %}" class="btn border-info">{{ i.city }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="paragraph">
+        </div>
+    </div>
+</div>
+{% endblock %}

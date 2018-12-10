@@ -1,0 +1,122 @@
+/* opacticy */
+
+.hover-opactict-2:hover img {
+    box-shadow: 1px 1px 8px 1px rgba(255, 95, 95, 1);
+    opacity: 0.2;
+    transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+}
+
+/* transform */
+
+.translate-top:hover .description {
+    transform: translate(0, -150px);
+    -moz-transform: translate(0, -150px);
+    -webkit-transform: translate(0, -150px);
+    transition: all 0.8s ease-in-out;
+    -moz-transition: all 0.8s ease-in-out;
+    -webkit-transition: all 0.8s ease-in-out;
+}
+
+/* tranform scale */
+
+.scale-zoom:hover i {
+    transform: scale(1.2, 1.2);
+    -moz-transform: scale(1.2, 1, 2);
+    -webkit-transform: scale(1.2, 1.2);
+    transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+}
+
+/* hover-top-height */
+
+.animation-to-top {
+    transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+}
+
+.to-top-height {
+    background-size: 200% 200%;
+    background-image: linear-gradient(to top, #fff 50%, transparent 50%);
+    transition: background-position 300ms, color 300ms ease, border-color 300ms ease;
+}
+
+.animation-to-top:hover .to-top-height {
+    color: white;
+    border-color: #fff;
+    background-image: linear-gradient(to top, #fff 51%, transparent 50%);
+    background-position: 0 100%;
+    transition: background-position 300ms, color 300ms ease, border-color 300ms ease;
+}
+
+.top-to-height-red {
+    padding: 10px;
+    background-size: 200% 200%;
+    background-image: linear-gradient(to top, rgba(255, 95, 95, 1) 50%, transparent 50%);
+    transition: background-position 0.5s, color 0.5s ease;
+    -moz-transition: background-position 0.5s, color 0.5s ease;
+    -webkit-transition: background-position 0.5s, color 0.5s ease;
+}
+
+.top-to-height-red:hover {
+    background-position: 0 100%;
+    background-image: linear-gradient(to top, rgba(255, 95, 95, 1) 50%, transparent 50%);
+    transition: background-position 0.5s, color 0.5s ease;
+    -moz-transition: background-position 0.5s, color 0.5s ease;
+    -webkit-transition: background-position 0.5s, color 0.5s ease;
+}
+
+/* scale 1.1 */
+
+.scale-11 {
+    transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+}
+
+.scale-11:hover {
+    box-shadow: 1px 1px 4px 1px rgba(255, 95, 95, 1);
+    transform: scale(1.1);
+    -moz-transform: scale(1.1);
+    -webkit-transform: scale(1.1);
+    transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+}
+
+/* scale 1.05 */
+
+.scale-105 {
+    transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+}
+
+.scale-105:hover {
+    transform: scale(1.05);
+    -webkit-transform: scale(1.05);
+    -moz-transform: scale(1.05);
+    transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+}
+
+.border-box {
+    width: 100%;
+    border-radius: 2px;
+    border: 1px solid transparent;
+    transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+}
+
+.border-box:hover {
+    border: 1px solid rgba(255, 95, 95, 1);
+    transition: all 1.5s ease-in-out;
+    -moz-transition: all 1.5s ease-in-out;
+    -webkit-transition: all 1.5s ease-in-out;
+    box-shadow: 1px 1px 8px 1px rgba(255, 95, 95, 1);
+}

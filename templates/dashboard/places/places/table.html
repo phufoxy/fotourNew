@@ -1,0 +1,118 @@
+{% extends 'dashboard/base_dashboard.html' %}
+{% block title %}Table Place {% endblock %}
+{% block title_main %}Table Place{% endblock %}
+{% block details %}Edit Place For You{% endblock %}
+{% block body %}
+<div class="modal-left">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> <i class="fas fa-trash-alt"></i></button>
+</div>
+<!-- Button trigger modal -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="" class="form-horizontal" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {% for field in form %}
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <span class="text-danger small">
+                                {{ field.error }}
+                            </span>
+                        </div>
+                        <div class="col-sm-10">
+                            <div class="form-group">
+                                <label for="pwd">{{ field.label_tag }}</label>
+                                {% load widget_tweaks %}
+                                {% render_field field class="form-control" placeholder=field.name %}
+                                <!-- {{ field|append_attr:"class:form-control" }} -->
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="boxes">
+    {% for i in context %}
+    <div class="box">
+        <div class="img">
+            <img src="{{ i.image_place.url }}" alt="Box">
+        </div>
+        <div class="desciption">
+            <h2 class="text-center">{{ i.name_place }}</h2>
+            <h1 class="text-center">{{ i.city }} || {{ i.address }}</h1>
+        </div>
+        <div class="info">
+            <p>{{i.type_place }}</p>
+        </div>
+        <div class="panel">
+            <ul>
+                <li> <a href="{% url 'UpdatePlace' i.id %}"><i class="fas fa-edit"></i></a>
+                </li>
+                <li>
+                    <form action="{% url 'DeletePlace' i.id %}" method="POST">
+                        {% csrf_token %}
+                        <button onclick="checkDelete()" type="submit" class="" style="background: transparent;border:0;">
+                            <i class="fas fa-trash" style="color:#fff;cursor: pointer;"></i>
+                        </button>
+                    </form>
+                </li>
+                <li><a href="">free</a></li>
+            </ul>
+        </div>
+        <div class="edit">
+            <a href="sd"><i class="fas fa-edit"></i></a>
+            <form action="{% url 'DeletePlace' i.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" style="background: transparent;border: 0">
+                    <i class="fas fa-trash"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% if is_paginated %}
+<div class="panning">
+    <ul>
+        {% if page_obj.has_previous %}
+        <li><a href="?page={{ page_obj.previous_page_number }}"><i class="fas fa-chevron-left"></i></a></li>
+        {% else %}
+        <li class="disabled"><span>&laquo;</span></li>
+        {% endif %}
+        {% for i in paginator.page_range %}
+        {% if page_obj.number == i %}
+        <li class="active"><span>{{ i }} &nbsp;<span class="sr-only">(current)</span></span></li>
+        {% else %}
+        <li><a href="?page={{ i }}">{{ i }}&nbsp;</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+        <li><a href="?page={{ page_obj.next_page_number }}"><i class="fas fa-chevron-right"></i></a></li>
+        {% else %}
+        <li class="disabled"><span>&raquo;</span></li>
+        {% endif %}
+    </ul>
+</div>
+{% endif %}
+{% endblock %}

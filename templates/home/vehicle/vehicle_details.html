@@ -1,0 +1,118 @@
+{% extends 'home/base.html' %} {% block title %}Home{% endblock %} {% block body %} {% load static %}
+<div id="tours" class="padding-top-bottom">
+    <div class="boxes_tour">
+        {% for i in context %}
+        <div class="box animation-to-top">
+            <img src="{{ i.img_route.url }}" alt="Image Folder One">
+            <div class="description to-top-height">
+                <a href="/vehicle/{{ id_car }}/car/{{i.id}}/" class="seen"><i class="fas fa-share-square"></i></a>
+                <h3>{{ i.price }} vnđ </h3>
+                <h1>{{ i.go_route }}</h1>
+                <p class="text-norm">{{ i.vehicle }}</p>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="pagination">
+            {% if place.has_other_pages %}
+            <ul>
+                {% if place.has_previous %}
+                <li class="pagi"><a href="?page={{ place.previous_page_number }}" class="number"><i class="fas fa-chevron-circle-left"></i></a></li>
+                {% else %}
+                <li class="pagi disabled"><a href="avascript:void(0)" class="number"><i class="fas fa-chevron-circle-left"></i></a></li>
+                {% endif %}
+                {% for i in place.paginator.page_range %}
+                {% if place.number == i %}
+                <li class="pagi"><a href="?page={{ i }}" class="number active">{{ i }} </a></li>
+                {% else %}
+                <li class="pagi"><a href="?page={{ i }}" class="number">{{ i }}</a></li>
+                {% endif %}
+                {% endfor %}
+                {% if place.has_next %}
+                <li class="pagi"><a href="?page={{ place.next_page_number }}" class="number"><i class="fas fa-chevron-circle-right"></i></a></li>
+                {% else %}
+                <li class="pagi disabled"><a href="avascript:void(0)" class="number"><i class="fas fa-chevron-circle-right"></i></a></li>
+                {% endif %}
+            </ul>
+            {% endif %}
+        </div>
+    </div>
+    <div class="find-form">
+        <form action="/create_vehicle_tour/{{ vehicle.id }}">
+            <h1 class="title-form">find your tour</h1>
+            <!-- <div class="form-group">
+                <input type="text" placeholder="search location" class="form-control">
+            </div> -->
+            <div class="form-group">
+                <select class="form-control" id="exampleFormControlSelect1" name="book">
+                    <option selected="selected" disabled="disabled">Tour</option>
+                    {% for i in book_Tour %}
+                    <option>{{ i.name_book }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="datetime-local" class="form-control" name="date_to">
+            </div>
+            <input type="submit" class="btn btn-danger" value="Add Tour">
+        </form>
+        <div class="categories">
+            <h1>categories</h1>
+            <ul>
+                <li>
+                    <h3>tours</h3>
+                    <p>(12)</p>
+                </li>
+                <li>
+                    <h3>hotel</h3>
+                    <p>(22)</p>
+                </li>
+                <li>
+                    <h3>cruises</h3>
+                    <p>(12)</p>
+                </li>
+                <li>
+                    <h3>restaurant</h3>
+                    <p>(12)</p>
+                </li>
+                <li>
+                    <h3>destination</h3>
+                    <p>(12)</p>
+                </li>
+            </ul>
+        </div>
+        <div class="tab-cloud">
+            <h1>tag clound</h1>
+            <div class="tabs">
+                <a href="" class="btn border-info">life</a>
+                <a href="" class="btn border-info">sport</a>
+                <a href="" class="btn border-info">tech</a>
+                <a href="" class="btn border-info">travel</a>
+                <a href="" class="btn border-info">life</a>
+                <a href="" class="btn border-info">sport</a>
+                <a href="" class="btn border-info">tech</a>
+                <a href="" class="btn border-info">travel</a>
+            </div>
+        </div>
+        <div class="paragraph">
+            <h1>paragraph</h1>
+            <p>By 1974, Slade had become a big success in the UK, Europe and beyond, however the band felt that
+                continuing
+                to provide 'more of the same' was not what they wanted to do. Their manager Chas Chandler suggested
+                they
+                do a movie, to which the band agreed. To accompany the film, Holder and Lea began writing material for
+                a soundtrack album, which would continue to see the band break out of their successful formula and try
+                different musical ideas. "Far Far Away" was selected as the album's lead single and was released in
+                October
+                1974, reaching No. 2 in the UK. To accompany the film, Holder and Lea began writing material for a
+                soundtrack
+                album, which would continue to see the band break out of their successful formula and try different
+                musical
+                ideas. "Far Far Away" was selected as the album's lead single and was released in October 1974,
+                reaching
+                No. 2 in the UK
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,341 @@
+{% extends 'home/base.html' %} {% block title %}Home{% endblock %} {% block body %} {% load static %}
+{% load humanize %}
+<div id="tabs">
+    <div class="container">
+        <div class="tab">
+            <button class="btn btn-tab-link lang" id="defaultOpen" onclick="openTab(event,'form-item-1')" key="fight">01
+                Tour
+            </button>
+            <button class="btn btn-tab-link lang" onclick="openTab(event,'form-item-2')" key="hotels">02 hotels</button>
+            <button class="btn btn-tab-link lang" onclick="openTab(event,'form-item-3')" key="car">03 car rent</button>
+            <button class="btn btn-tab-link lang" onclick="openTab(event,'form-item-4')" key="cruises">04 cruises</button>
+        </div>
+        <div class="tab-content" id="form-item-1">
+            <form action="{% url 'tour_mutil' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group input-content">
+                    <select class="form-control" name="city_tour" style="background: transparent;">
+                        <option selected="true" value="" disabled="disabled">Choose Tagging</option>
+                        {% for i in tour_city %}
+                        <option value="{{ i.city }}">{{ i.city }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group input-content">
+                    <select class="form-control" name="price" style="background: transparent;">
+                        <option selected="true" value="" disabled="disabled">Choose Price</option>
+                        <option value="1000000">Dưới 1 Triệu</option>
+                        <option value="2000000">Dưới 2 Triệu</option>
+                        <option value="3000000">Dưới 3 Triệu</option>
+                        <option value="4000000">Dưới 4 Triệu</option>
+                        <option value="5000000">Dưới 5 Triệu</option>
+                        <option value="6000000">Dưới 6 Triệu</option>
+                        <option value="50000000">Trên 10 Triệu</option>
+                    </select>
+                </div>
+                <div class="form-group input-content">
+                    <select class="form-control" name="person" style="background: transparent;">
+                        <option selected="true" value="" disabled="disabled">Choose Person</option>
+                        <option value="1 and 2">1 Người </option>
+                        <option value="2 and 3">2 Người</option>
+                        <option value="3 and 5">3 Người -> 5 Người</option>
+                        <option value="5 and 10">5 Người -> 10 Người</option>
+                        <option value="10 and 20">10 Người Trở Lên</option>
+                    </select>
+                </div>
+                <div class="form-group input-content">
+                    <select class="form-control" name="date" style="background: transparent;">
+                        <option selected="true" value="" disabled="disabled">Choose Date</option>
+                        <option value="1">1 Ngày/Đêm</option>
+                        <option value="2">2 Ngày/Đêm</option>
+                        <option value="3">3 Ngày/Đêm</option>
+                        <option value="4">4 Ngày/Đêm</option>
+                        <option value="5">5 Ngày/Đêm</option>
+                        <option value="6">6 Ngày/Đêm</option>
+                    </select>
+                </div>
+                <button class="btn">find fights</button>
+            </form>
+        </div>
+        <div class="tab-content" id="form-item-2">
+            <div class="form-group input-content">
+                <input type="text" class="form-control" placeholder="search location">
+            </div>
+            <div class="form-group input-content">
+                <input type="text" class="form-control" placeholder="search location">
+            </div>
+            <div class="form-group input-content">
+                <input type="text" class="form-control" placeholder="search location">
+            </div>
+            <div class="form-group input-content">
+                <input type="text" class="form-control" placeholder="search location">
+            </div>
+            <button class="btn">find fights 3</button>
+        </div>
+        <div class="tab-content" id="form-item-3">
+            <div class="form-group input-content">
+                <input type="text" class="form-control" placeholder="search location">
+            </div>
+            <div class="form-group input-content">
+                <input type="text" class="form-control" placeholder="search location">
+            </div>
+            <div class="form-group input-content">
+                <input type="text" class="form-control" placeholder="search location">
+            </div>
+            <div class="form-group input-content">
+                <input type="text" class="form-control" placeholder="search location">
+            </div>
+            <button class="btn">find fights 4</button>
+        </div>
+        <div class="tab-content" id="form-item-4">
+            <div class="form-group input-content">
+                <input type="text" class="form-control" placeholder="search location">
+            </div>
+            <div class="form-group input-content">
+                <input type="text" class="form-control" placeholder="search location">
+            </div>
+            <div class="form-group input-content">
+                <input type="text" class="form-control" placeholder="search location">
+            </div>
+            <div class="form-group input-content">
+                <input type="text" class="form-control" placeholder="search location">
+            </div>
+            <button class="btn">find fights 5</button>
+        </div>
+    </div>
+</div>
+{% for message in messages %}
+<div class="alert {{ message.tags }} alert-dismissible" role="alert" id="message">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+    {% if message == "Please sign in to book." %}
+    <a href="/login/?next={{ request.path }}" class="lang" key="login">Login</a>
+    {% endif %}
+</div>
+{% endfor %}
+<script src="{% static 'home/js/js/tab.js' %}"></script>
+<div class="search-tour" id="search-tour">
+    <!-- <p><a href="#ex1" rel="modal:open" class="btn btn-danger">Book Tour</a></p> -->
+    <a href="#ex2" rel="modal:open" class="btn btn-danger"><i class="fas fa-search-plus"></i></a>
+    <div id="ex2" class="modal" style="width: 100%;">
+        <div class="modal-header">
+            <h3>Find Tour</h3>
+        </div>
+        <form action="{% url 'tour_mutil' %}" method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <select class="form-control" name="city_tour">
+                    <option selected="true" value="" disabled="disabled">Choose City</option>
+                    {% for i in tour_city %}
+                    <option value="{{ i.city }}">{{ i.city }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group input-content">
+                <select class="form-control" name="price" style="background: transparent;">
+                    <option selected="true" value="" disabled="disabled">Choose Price</option>
+                    <option value="1000000">Dưới 1 Triệu</option>
+                    <option value="2000000">Dưới 2 Triệu</option>
+                    <option value="3000000">Dưới 3 Triệu</option>
+                    <option value="4000000">Dưới 4 Triệu</option>
+                    <option value="5000000">Dưới 5 Triệu</option>
+                    <option value="6000000">Dưới 6 Triệu</option>
+                    <option value="50000000">Trên 10 Triệu</option>
+                </select>
+            </div>
+            <div class="form-group input-content">
+                <select class="form-control" name="person" style="background: transparent;">
+                    <option selected="true" value="" disabled="disabled">Choose Person</option>
+                    <option value="1 and 2">1 Người </option>
+                    <option value="2 and 3">2 Người</option>
+                    <option value="3 and 5">3 Người -> 5 Người</option>
+                    <option value="5 and 10">5 Người -> 10 Người</option>
+                    <option value="10 and 20">10 Người Trở Lên</option>
+                </select>
+            </div>
+            <div class="form-group input-content">
+                <select class="form-control" name="date" style="background: transparent;">
+                    <option selected="true" value="" disabled="disabled">Choose Date</option>
+                    <option value="1">1 Ngày/Đêm</option>
+                    <option value="2">2 Ngày/Đêm</option>
+                    <option value="3">3 Ngày/Đêm</option>
+                    <option value="4">4 Ngày/Đêm</option>
+                    <option value="5">5 Ngày/Đêm</option>
+                    <option value="6">6 Ngày/Đêm</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Search Tour" class="btn btn-danger">
+            </div>
+        </form>
+    </div>
+</div>
+<div id="panel">
+    <div class="img-nitro">
+        <img src="{% static 'home/images/image_1.jpg' %}" alt="Panel Number One">
+        <button class="btn"><i class="fas fa-play"></i></button>
+    </div>
+    <div class="description">
+        <h1>welcome FOTOUR</h1>
+        <p>Cuộc đời là một hành trình kéo dài. Và trong mọi chuyến đi đều khó có thể tránh khỏi những trắc trở, khó
+            khăn. Vậy làm sao để ta có thể tiếp tục cuộc chơi với sự vui vẻ và hứng khởi chứ không phải cố gắng tiếp
+            tục trong sự chán chường, bất lực. Không chỉ biết thêm nhiều vùng đất mới và được thưởng thức những món
+            ngon vật lạ, bạn còn có cơ hội khám phá chính mình trên hành trình du lịch. Một cách đơn giản để “refresh”
+            bản thân chính là đi du lịch. Thật vậy, với một chút chuẩn bị, việc “xách balo lên và đi” sẽ đem lại lợi
+            ích lớn cho bạn.
+            Và một trang web du lịch luôn là lựa chọn tuyệt vời để tìm hiểu trước khi bạn bắt đầu hành trình.
+            Hãy đến với chúng tôi, FOTOUR luôn đồng hành cùng những chuyến đi của bạn. Website hổ trợ nhiều mặt du lịch
+            giúp mọi người có thể tự tin và tiết kiệm thời gian khi có ý định du lịch. Với lịch trình dày, đúng thời
+            gian cam kết, luôn sẵn sàng phục vụ du khách mọi lúc, mọi nơi, đảm bảo tính chuyên nghiệp và chất lượng
+            thông tin tốt nhất.
+
+        </p>
+    </div>
+</div>
+<div id="places" class="padding-top-bottom">
+    <div class="container">
+        <div class="circle ">
+            {% for i in place_context %}
+            <div class="circle-item hover-opactict-2 translate-top">
+                <img src="{{ i.image_place.url }}" alt="Circle Item">
+                <div class="description">
+                    <h1>{{ i.name_place }}</h1>
+                    <h3><span class="current"><span>{{ i.price|intcomma }} VNĐ</h3>
+                    <a href="{% url 'places_details' i.id  %}">read more</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<div id="our-services" class="padding-top-bottom">
+    <div class="container">
+        <h1 class="title text-center">our services</h1>
+        <div class="boxes padding-top-bottom">
+            <div class="box scale-zoom">
+                <i class="fab fa-wolf-pack-battalion"></i>
+                <h1>special Place Tour</h1>
+                <p>Even the all-pơèull pointing has no control about the blond tét it is an almost unirthographic</p>
+            </div>
+            <div class="box scale-zoom">
+                <i class="fas fa-globe-asia"></i>
+                <h1>special House Tour</h1>
+                <p>Even the all-pơèull pointing has no control about the blond tét it is an almost unirthographic</p>
+            </div>
+            <div class="box scale-zoom">
+                <i class="fas fa-business-time"></i>
+                <h1>special Restaurants Tour</h1>
+                <p>Even the all-pơèull pointing has no control about the blond tét it is an almost unirthographic</p>
+            </div>
+            <div class="box scale-zoom">
+                <i class="fas fa-map-marked-alt"></i>
+                <h1>special Book Tour</h1>
+                <p>Even the all-pơèull pointing has no control about the blond tét it is an almost unirthographic</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popular" class="padding-top-bottom">
+    {% if context %}
+    <h1 class="text-center title">most popular tour</h1>
+    <div class="boxes">
+        {% for i in context %}
+        <div class="box animation-to-top">
+            <img src="{{ i.image_tour.url }}" alt="Image Folder One">
+            <div class="description to-top-height">
+                <a href="{% url 'places_details' i.id  %}" class="seen"><i class="fas fa-share-square"></i></a>
+                <h1>{{ i.person }} Người / {{ i.date_tour }} Ngày </h1>
+                <h3>{{ i.sum_price|intcomma }} VNĐ</h3>
+                <h1>{{ i.name_tour }}</h1>
+                <p class="text-norm">{{ i.city }} -- {{ i.type_tour }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>
+<div id="our-satisfied" class="padding-top-bottom">
+    <div class="container">
+        <h1 class="title text-center">Familiar customers</h1>
+        <div class="boxes">
+            {% for i in booktotal %}
+            <div class="box scale-11">
+                <img src="{{ i.accout.avatar.url }}" alt="Person">
+                <ul>
+                    <li><i class="fas fa-star"></i></li>
+                    <li><i class="fas fa-star"></i></li>
+                    <li><i class="fas fa-star"></i></li>
+                    <li><i class="fas fa-star"></i></li>
+                    <li><i class="fas fa-star"></i></li>
+                </ul>
+                <p>{{ i.accout.description }}. </p>
+                <h1>{{ i.accout.name }}</h1>
+                <h3 style="font-size: 14px;">{{ i.accout.email }}</h3>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% if houses %}
+<div id="recommended" class="padding-top-bottom">
+    <form action="">
+        <p class="text-dark">want to get our hottest travel deals top tips and advice? subcribe us now!</p>
+        <div class="form-input">
+            <input type="text" class="form-control" placeholder="enter your email address">
+            <i class="fab fa-telegram-plane"></i>
+        </div>
+    </form>
+    <div class="most">
+
+        <h1 class="title text-left">most recommended hotels</h1>
+        <div class="boxes">
+            {% for i in houses %}
+            <div class="box animation-to-top">
+                <img src="{{ i.image_house.url }}" alt="Image Folder One">
+                <div class="description to-top-height">
+                    <h3>{{ i.price }} vnđ</h3>
+                    <h1>{{ i.name_house }}</h1>
+                    <p class="text-norm">{{ i.address }} -- {{ i.city }} </p>
+                    <nav>
+                        <ul>
+                            <li><i class="fas fa-star"></i></li>
+                            <li><i class="fas fa-star"></i></li>
+                            <li><i class="fas fa-star"></i></li>
+                            <li><i class="fas fa-star"></i></li>
+                            <li><i class="fas fa-star"></i></li>
+                            <li>
+                                <p>500 reviews</p>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% if bookTour %}
+<div id="our-blog" class="padding-top-bottom">
+    <div class="container">
+        <h1 class="title text-center text-dark">our blog</h1>
+        {% for i in bookTour %}
+        <div class="boxes">
+            <div class="box scale-105">
+                <img src="{{  i.tour.image_tour.url }}" alt="Hotel" class="border-box">
+                <div class="description top-to-height-red">
+                    <h3>{{ i.date_start|date:"d-m-Y" }}</h3>
+                    <h2>{{ i.tour.name_tour }}</h2>
+                    <p>{{ i.sum_price|intcomma }} VNĐ/ {{ i.person }} Người</p>
+                    <a href="{% url 'tour_details' i.tour_id  %}">read more</a>
+                    <!-- <i class="fas fa-star">&nbsp;3</i> -->
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endif %}
+{% endblock %}

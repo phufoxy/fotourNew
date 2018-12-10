@@ -1,0 +1,199 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+        crossorigin="anonymous">
+    <!-- reset css -->
+    <link rel="stylesheet" href="{% static 'dashboard/css/reset.css' %}">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="{% static 'dashboard/css/bootstrap.min.css' %}">
+    <!-- style css -->
+    <link rel="stylesheet" href="{% static 'dashboard/css/style.css' %}">
+    <!-- link icon -->
+    <link rel="shortcut icon" href="{% static 'home/images/digital-campaign.png' %}" type="image/x-icon">
+</head>
+
+<body>
+    <header id="main-header">
+        <a href="javascript:void(0);" class="icon-nav" onclick="myFunction()">
+            <i class="fa fa-bars"></i>
+        </a>
+        <h1>AdminLTE</h1>
+        <nav>
+            <ul>
+                <li>
+                    <i class="far fa-envelope"></i><sup>04</sup>
+                </li>
+                <li>
+                    <i class="far fa-bell"></i><sup>04</sup>
+                </li>
+                <li>
+                    <i class="fas fa-flag"></i><sup>04</sup>
+                </li>
+                <li>
+                    <p><img src="{% static 'dashboard/images/avatar.png' %}" alt="Avatar Person"> Alexander Pirce</p>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div class="wrapper-content">
+        <aside id="main-sidebar" class="topnav">
+            <div class="description">
+                <img src="{% static 'dashboard/images/avatar.png' %}" alt="Person Avatar">
+                <div class="info">
+                    <h1>Alexander Picrece</h1>
+                    <p>online</p>
+                </div>
+            </div>
+            <div class="form">
+                <div class="input-form">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="search">
+                </div>
+            </div>
+            <div class="menu">
+                <div class="header-menu">
+                    <h1>main navagation</h1>
+                </div>
+                <nav>
+                    <ul>
+                        <li class="nav">
+                            <i class="fas fa-tachometer-alt"></i>
+                            &nbsp;
+                            <a href="">dashboard</a>
+                        </li>
+                        <li class="nav dropdown-btn">
+                            <i class="fas fa-folder-open"></i>
+                            &nbsp;
+                            <a href="javascript:void(0)">table </a>
+                        </li>
+                        <ul class="dropdown-nav">
+                            <li><i class="fas fa-folder-open" style="color: #fff"></i>
+                                &nbsp;<a href="">Student</a></li>
+                            <li><i class="fas fa-folder-open" style="color: #fff"></i>
+                                &nbsp;<a href="">Student</a></li>
+                            <li><i class="fas fa-folder-open" style="color: #fff"></i>
+                                &nbsp;<a href="">Student</a></li>
+                        </ul>
+                        <li class="nav dropdown-btn">
+                            <i class="fas fa-folder-open"></i>
+                            &nbsp;
+                            <a href="javascript:void(0)">places </a>
+                        </li>
+                        <ul class="dropdown-nav">
+                            <li><a href="/CreatePlace">Form places</a></li>
+                            <li><a href="/IndexView_Place">Table places</a></li>
+                            <li><a href="/CreatePlace_City">Form City</a></li>
+                            <li><a href="/IndexView_Place_City">Table City</a></li>
+                        </ul>
+                        <li class="nav">
+                            <i class="far fa-newspaper"></i>
+                            &nbsp;
+                            <a href="form.html">widgets</a>
+                        </li>
+                        <li class="nav">
+                            <i class="fas fa-chart-pie"></i>
+                            &nbsp;
+                            <a href="">charts</a>
+                        </li>
+                        <li class="nav">
+                            <i class="fas fa-desktop"></i>
+                            &nbsp;
+                            <a href="">ui elements</a>
+                        </li>
+                        <li class="nav">
+                            <i class="fas fa-edit"></i>
+                            &nbsp;
+                            <a href="">form</a>
+                        </li>
+                        <li class="nav">
+                            <i class="fas fa-table"></i>
+                            &nbsp;
+                            <a href="">tables</a>
+                        </li>
+                        <li class="nav">
+                            <i class="far fa-envelope"></i>
+                            &nbsp;
+                            <a href="">calender</a>
+                        </li>
+                        <li class="nav">
+                            <i class="fas fa-calendar-times"></i>
+                            &nbsp;
+                            <a href="">mailbox</a>
+                        </li>
+                        <li class="nav">
+                            <i class="fab fa-mailchimp"></i>
+                            &nbsp;
+                            <a href="">examples</a>
+                        </li>
+                        <li class="nav">
+                            <i class="fas fa-drum-steelpan"></i>
+                            &nbsp;
+                            <a href="">mutilevel</a>
+                        </li>
+                        <li class="nav">
+                            <i class="fas fa-book"></i>
+                            &nbsp;
+                            <a href="">documentation</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        <div id="content-main">
+            <div class="header-content">
+                <h1 class="title">dashboard <span class="current">controlpael</span></h1>
+                <div class="tab-menu">
+                    <h1> <i class="far fa-envelope"></i> &nbsp; home</h1>
+                </div>
+            </div>
+            <div class="boxes">
+                <div class="box">
+                    <h1>150</h1>
+                    <h3>new orders</h3>
+                    <div class="more">
+                        <p><a href="">more info</a></p>
+                    </div>
+                    <i class="fas fa-calendar-times"></i>
+                </div>
+                <div class="box">
+                    <h1>150</h1>
+                    <h3>new orders</h3>
+                    <div class="more">
+                        <p><a href="">more info</a></p>
+                    </div>
+                    <i class="fas fa-calendar-times"></i>
+                </div>
+                <div class="box">
+                    <h1>150</h1>
+                    <h3>new orders</h3>
+                    <div class="more">
+                        <p><a href="">more info</a></p>
+                    </div>
+                    <i class="fas fa-calendar-times"></i>
+                </div>
+                <div class="box">
+                    <h1>150</h1>
+                    <h3>new orders</h3>
+                    <div class="more">
+                        <p><a href="">more info</a></p>
+                    </div>
+                    <i class="fas fa-calendar-times"></i>
+                </div>
+            </div>
+
+            <footer id="main-footer">
+                <p>copyright &copy; 2014-201 Almsesed studio. All rights reverved</p>
+            </footer>
+        </div>
+    </div>
+    <script src="{% static 'dashboard/js/dropdown.js' %}"></script>
+</body>
+
+</html>

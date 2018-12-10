@@ -1,0 +1,61 @@
+{% extends 'dashboard/base_dashboard.html' %}
+{% block title %}Table Eating {% endblock %}
+{% block title_main %}Table Eating{% endblock %}
+{% block details %}Edit Eating For You{% endblock %}
+{% block body %}
+<div class="boxes">
+    {% for i in context %}
+    <div class="box">
+        <div class="img">
+            <img src="{{ i.img_status.url }}" alt="Box">
+        </div>
+        <div class="desciption">
+            <h2 class="text-center">{{ i.name_food }}</h2>
+            <h1 class="text-center">{{ i.price }}</h1>
+        </div>
+        <div class="info">
+            <p>{{i.restaurant }}</p>
+        </div>
+        <div class="panel">
+            <ul>
+                <li> <a href="{% url 'UpdateEating' i.id %}"><i class="fas fa-edit"></i></a>
+                </li>
+                <li>
+                    <form action="{% url 'EatingDelete' i.id %}" method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="album_id" value="{{ album.id }}">
+                        <button type="submit" class="" style="background: transparent;border:0;">
+                            <i class="fas fa-trash" style="color:#fff;cursor: pointer;"></i>
+                        </button>
+                    </form>
+                </li>
+                <li><a href="">free</a></li>
+            </ul>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% if is_paginated %}
+<div class="panning">
+    <ul>
+        {% if page_obj.has_previous %}
+        <li><a href="?page={{ page_obj.previous_page_number }}"><i class="fas fa-chevron-left"></i></a></li>
+        {% else %}
+        <li class="disabled"><span>&laquo;</span></li>
+        {% endif %}
+        {% for i in paginator.page_range %}
+        {% if page_obj.number == i %}
+        <li class="active"><span>{{ i }} &nbsp;<span class="sr-only">(current)</span></span></li>
+        {% else %}
+        <li><a href="?page={{ i }}">{{ i }}&nbsp;</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if page_obj.has_next %}
+        <li><a href="?page={{ page_obj.next_page_number }}"><i class="fas fa-chevron-right"></i></a></li>
+        {% else %}
+        <li class="disabled"><span>&raquo;</span></li>
+        {% endif %}
+    </ul>
+</div>
+{% endif %}
+{% endblock %}

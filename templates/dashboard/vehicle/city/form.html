@@ -1,0 +1,43 @@
+{% extends 'dashboard/base_dashboard.html' %}
+{% block title %}Form City Places{% endblock %}
+{% block body %}
+<div class="header-content">
+    <h1 class="title">Table <span class="current">controlpael</span></h1>
+    <div class="tab-menu">
+        <h1> <i class="far fa-envelope"></i> &nbsp; table</h1>
+    </div>
+</div>
+<div class="col-sm-12 panel">
+    <div class="title">
+        <h1>Living Form</h1>
+        <p>Description living for tralving</p>
+    </div>
+    <div class="container">
+        <form action="" class="form-horizontal" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <span class="text-danger small">
+                        {{ field.error }}
+                    </span>
+                </div>
+                <div class="col-sm-10">
+                    <div class="form-group">
+                        <label for="pwd">{{ field.label_tag }}</label>
+                        {% load widget_tweaks %}
+                        {% render_field field class="form-control" placeholder=field.name %}
+                        <!-- {{ field|append_attr:"class:form-control" }} -->
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

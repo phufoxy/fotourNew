@@ -1,0 +1,192 @@
+{% extends 'home/base.html' %} {% block title %}Home{% endblock %} {% block body %} {% load static %}
+{% load humanize %}
+
+<div id="tours" class="padding-top-bottom">
+    <div class="search-tour" id="search-tour">
+        <!-- <p><a href="#ex1" rel="modal:open" class="btn btn-danger">Book Tour</a></p> -->
+        <a href="#ex2" rel="modal:open" class="btn btn-danger"><i class="fas fa-search-plus"></i></a>
+        <div id="ex2" class="modal" style="width: 100%;">
+            <div class="modal-header">
+                <h3>Find Tour</h3>
+            </div>
+            <form action="{% url 'tour_mutil' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <select class="form-control" name="city_tour">
+                        <option selected="true" value="" disabled="disabled">Choose City</option>
+                        {% for i in tour_city %}
+                        <option value="{{ i.city }}">{{ i.city }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group input-content">
+                    <select class="form-control" name="price" style="background: transparent;">
+                        <option selected="true" value="" disabled="disabled">Choose Price</option>
+                        <option value="1000000">Dưới 1 Triệu</option>
+                        <option value="2000000">Dưới 2 Triệu</option>
+                        <option value="3000000">Dưới 3 Triệu</option>
+                        <option value="4000000">Dưới 4 Triệu</option>
+                        <option value="5000000">Dưới 5 Triệu</option>
+                        <option value="6000000">Dưới 6 Triệu</option>
+                        <option value="50000000">Trên 10 Triệu</option>
+                    </select>
+                </div>
+                <div class="form-group input-content">
+                    <select class="form-control" name="person" style="background: transparent;">
+                        <option selected="true" value="" disabled="disabled">Choose Person</option>
+                        <option value="1 and 2">1 Người </option>
+                        <option value="2 and 3">2 Người</option>
+                        <option value="3 and 5">3 Người -> 5 Người</option>
+                        <option value="5 and 10">5 Người -> 10 Người</option>
+                        <option value="10 and 20">10 Người Trở Lên</option>
+                    </select>
+                </div>
+                <div class="form-group input-content">
+                    <select class="form-control" name="date" style="background: transparent;">
+                        <option selected="true" value="" disabled="disabled">Choose Date</option>
+                        <option value="1">1 Ngày/Đêm</option>
+                        <option value="2">2 Ngày/Đêm</option>
+                        <option value="3">3 Ngày/Đêm</option>
+                        <option value="4">4 Ngày/Đêm</option>
+                        <option value="5">5 Ngày/Đêm</option>
+                        <option value="6">6 Ngày/Đêm</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Search Tour" class="btn btn-danger">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="boxes_tour">
+        {% for i in house_items %}
+        <div class="box animation-to-top">
+            <img src="{{ i.image_house.url }}" alt="Image Folder One">
+            <div class="description to-top-height">
+                <a href="{% url 'house_details' i.id  %}" class="seen"><i class="fas fa-share-square"></i></a>
+                <h3>{{ i.price }} vnđ</h3>
+                <h1>{{ i.name_house }}</h1>
+                <p class="text-norm">{{ i.type_house }}</p>
+                <nav>
+                    <ul>
+                        {% if i.star == 0.5 %}
+                        <li><i class="fas fa-star-half-alt"></i></li>
+                        {% endif %} {% if i.star == 1 %} {% for st in "9" %}
+                        <li><i class="fas fa-star"></i></li>
+                        {% endfor %} {% endif %} {% if i.star == 1.5 %} {% for st in "9" %}
+                        <li><i class="fas fa-star"></i></li>
+                        {% endfor %}
+                        <li><i class="fas fa-star-half-alt"></i></li>
+                        {% endif %} {% if i.star == 2 %} {% for st in "99" %}
+                        <li><i class="fas fa-star"></i></li>
+                        {% endfor %} {% endif %} {% if i.star == 2.5 %} {% for st in "99" %}
+                        <li><i class="fas fa-star"></i></li>
+                        {% endfor %}
+                        <li><i class="fas fa-star-half-alt"></i></li>
+                        {% endif %} {% if i.star == 3 %} {% for st in "999" %}
+                        <li><i class="fas fa-star"></i></li>
+                        {% endfor %} {% endif %} {% if i.star == 3.5 %} {% for st in "999" %}
+                        <li><i class="fas fa-star"></i></li>
+                        {% endfor %}
+                        <li><i class="fas fa-star-half-alt"></i></li>
+                        {% endif %} {% if i.star == 4 %} {% for st in "9999" %}
+                        <li><i class="fas fa-star"></i></li>
+                        {% endfor %} {% endif %} {% if i.star == 4.5 %} {% for st in "9999" %}
+                        <li><i class="fas fa-star"></i></li>
+                        {% endfor %}
+                        <li><i class="fas fa-star-half-alt"></i></li>
+                        {% endif %} {% if i.star == 5 %} {% for st in "9" %}
+                        <li><i class="fas fa-star"></i></li>
+                        {% endfor %} {% endif %}
+                        <li>
+                            <p>{{ i.review }} reviews</p>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="pagination">
+            <nav style="margin: 0 auto">
+                {% if house_items.has_other_pages %}
+                <ul class="pagination">
+                    {% if house_items.has_previous %}
+                    <li class="page-item ">
+                        <a href="?page={{ house_items.previous_page_number }}">
+                            <span class="page-link">Previous</span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a href="avascript:void(0)">
+                            <span class="page-link">Previous</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% for i in house_items.paginator.page_range %}
+                    {% if house_items.number == i %}
+                    <li class="page-item active">
+                        <a href="?page={{ i }}">
+                            <span class="page-link">
+                                {{ i }}
+                                <span class="sr-only">(current)</span>
+                            </span>
+                        </a>
+                    </li>
+                    {% else %}
+                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if house_items.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ house_items.next_page_number }}">Next</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                    {% endif %}
+                </ul>
+                {% endif %}
+            </nav>
+        </div>
+    </div>
+    <div class="find-form">
+        <form action="{%  url 'search_house' %}" method="POST">
+            {% csrf_token %}
+            <h1 class="title-form">find your tour</h1>
+            <select class="form-control" name="city">
+                <option value="all">All</option>
+                {% for i in city %}
+                <option value="{{ i.city }}">{{ i.city }}</option>
+                {% endfor %}
+            </select>
+            <input type="submit" class="btn btn-danger" value="find fights">
+        </form>
+        <div class="categories">
+            <h1>tour</h1>
+            <ul>
+                {% for i in place_tour %}
+                <li>
+                    <h3>{{ i.name_house }}/ {{ i.city }} / {{ i.price|intcomma }} VNĐ</h3>
+                    <h6>( {{ i.type_house }} )</h6>
+                    <p> <a href="{% url 'house_details' i.id  %}" class="btn btn-danger">Seem</a>
+                    </p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="tab-cloud">
+            <h1>tag clound</h1>
+            <div class="tabs">
+                {% for i in city %}
+                <a href="{% url 'house_search' i.city %}" class="btn border-info">{{ i.city }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="paragraph">
+
+        </div>
+    </div>
+</div>
+{% endblock %}

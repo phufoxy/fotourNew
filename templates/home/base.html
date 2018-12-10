@@ -1,0 +1,190 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- style reset -->
+    <link rel="stylesheet" type="text/css" media="screen" href="{% static 'home/css/reset.css' %}" />
+    <!-- style css -->
+    <link rel="stylesheet" href="{% static 'home/css/style.css' %}">
+    <!-- bootstrap css -->
+    <link rel="stylesheet" href="{% static 'home/css/bootstrap.min.css' %}">
+    <!-- animation css -->
+    <link rel="stylesheet" href="{% static 'home/css/animation.css' %}">
+    <!-- icon style -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU"
+        crossorigin="anonymous">
+
+    <script src="{% static 'home/js/jquery/jquery-3.3.1.min.js' %}"></script>
+    <!-- translate -->
+    <script src="{% static 'home/js/jquery/translate.js' %}"></script>
+    <!-- link icon -->
+    <link rel="shortcut icon" href="{% static 'home/images/digital-campaign.png' %}" type="image/x-icon">
+    <!-- script bootstrap -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+    <!-- jQuery Modal -->
+    <link rel="stylesheet" href="{% static 'home/js/jquery/jquery.modal.min.css' %}" />
+    <script src="{% static 'home/js/jquery/jquery.modal.min.js' %}"></script>
+
+</head>
+
+<body>
+    <div id="preloader"></div>
+    <script>
+        window.addEventListener("load", function () {
+            const loader = document.querySelector("#preloader");
+            loader.className += " hidden"; // class "loader hidden"
+        });
+    </script>
+    <!-- Start WOWSlider.com HEAD section -->
+    <!-- add to the <head> of your page -->
+    <link rel="stylesheet" type="text/css" href="{% static 'home/engine0/style.css' %}" />
+    <!--script type="text/javascript" src="engine0/jquery.js"></script-->
+    <!-- End WOWSlider.com HEAD section -->
+
+    <!-- Start WOWSlider.com HEAD section -->
+    <!-- add to the <head> of your page -->
+    <link rel="stylesheet" type="text/css" href="{% static 'home/engine0/style.css' %}" />
+    <!--script type="text/javascript" src="engine0/jquery.js"></script-->
+    <header id="menu-header" class="menu">
+        <a href="javascript:void(0);" class="icon" onclick="myHeader()">
+            <i class="fa fa-bars"></i>
+        </a>
+        <h1>fotour</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}" class="lang" key="home">home</a></li>
+                <li><a href="{% url 'places' %}" class="lang" key="places">places</a></li>
+                <li><a href="{% url 'house' %}" class="lang" key="hotels">house</a></li>
+                <li><a href="{% url 'list_tour' %}" class="lang" key="blog">Tour</a></li>
+                {% if admin %}
+                <li><a href="{% url 'dashboard_home' %}" class="lang" key="contact">Dashboard</a></li>
+                {% endif %}
+                {% if idempresa == None %}
+                <li><a href="/login/?next={{ request.path }}" class="lang" key="login">Login</a></li>
+                {% else %}
+                <li><a href="{% url 'book_details' %}" class="lang" key="services">book</a></li>
+                <li><a href="{% url 'ListProfile' %}" class="lang" key="about">Profile</a></li>
+                <li><a href="{% url 'logout' %}" class="lang" key="contact">Logout</a></li>
+                {% endif %}
+                <li> <img class="translate" id="en" src="http://icons.iconarchive.com/icons/icons-land/vista-flags/32/United-States-Flag-1-icon.png"></li>
+                <li> <img class="translate" id="vn" src="{% static 'home/images/vietnam-flag-3d-icon-32.png' %}"></li>
+
+            </ul>
+        </nav>
+    </header>
+    <!-- Start WOWSlider.com BODY section -->
+    <!-- add to the <body> of your page -->
+    <div id="wowslider-container0">
+        <div class="ws_images">
+            <ul>
+                <li><img src="{% static 'home/data0/images/bg_1.jpg' %}" alt="bg_1" title="bg_1" id="wows0_0" /></li>
+                <li><img src="{% static 'home/data0/images/bg_2.jpg' %}" alt="bg_2" title="bg_2" id="wows0_1" /></li>
+                <li><img src="{% static 'home/data0/images/bg_3.jpg' %}" alt="bg_3" title="bg_3" id="wows0_2" /></li>
+                <li><a href=""><img src="{% static 'home/data0/images/bg_4.jpg' %}" alt="javascript photo gallery"
+                            title="bg_4" id="wows0_3" /></a></li>
+                <li><img src="{% static 'home/data0/images/bg_5.jpg' %}" alt="bg_5" title="bg_5" id="wows0_4" /></li>
+            </ul>
+        </div>
+        <div class="ws_bullets">
+            <div>
+                <a href="#" title="bg_1"><span><img src="{% static 'home/data0/tooltips/bg_1.jpg' %}" alt="bg_1" />1</span></a>
+                <a href="#" title="bg_2"><span><img src="{% static 'home/data0/tooltips/bg_2.jpg' %}" alt="bg_2" />2</span></a>
+                <a href="#" title="bg_3"><span><img src="{% static 'home/data0/tooltips/bg_3.jpg' %}" alt="bg_3" />3</span></a>
+                <a href="#" title="bg_4"><span><img src="{% static 'home/data0/tooltips/bg_4.jpg' %}" alt="bg_4" />4</span></a>
+                <a href="#" title="bg_5"><span><img src="{% static 'home/data0/tooltips/bg_5.jpg' %}" alt="bg_5" />5</span></a>
+            </div>
+        </div>
+        <div class="ws_script" style="position:absolute;left:-99%"><a href="http://wowslider.net">jquery carousel
+                slider</a>
+            by WOWSlider.com v8.8</div>
+        <div class="ws_shadow"></div>
+    </div>
+    <script type="text/javascript" src="{% static 'home/engine0/wowslider.js' %}"></script>
+    <script type="text/javascript" src="{% static 'home/engine0/script.js' %}"></script>
+    <!-- End WOWSlider.com BODY section -->
+
+    {% block body %} {% endblock %}
+
+    <footer class="t-100">
+        <div class="container">
+            <div class="footer-header">
+                <div class="box">
+                    <h1 class="title-footer">voyage fellow tourist</h1>
+                    <p>far far away,behind the word mountains, far from the countries vokalia and consonantia, there
+                        live
+                        the blind texts</p>
+                </div>
+                <div class="box">
+                    <h1 class="title-footer">book now</h1>
+                    <nav>
+                        <ul>
+                            <li><a href="{% url 'dashboard_home' %}">Dashboard</a></li>
+                            <li><a href="#">hotels</a></li>
+                            <li><a href="#">tour</a></li>
+                            <li><a href="#">car rent</a></li>
+                            <li><a href="#">beach & resorts</a></li>
+                            <li><a href="#">mountains</a></li>
+                            <li><a href="#">cruises</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="box">
+                    <h1 class="title-footer">book now</h1>
+                    <nav>
+                        <ul>
+                            <li><a href="#">fight</a></li>
+                            <li><a href="#">hotels</a></li>
+                            <li><a href="#">tour</a></li>
+                            <li><a href="#">car rent</a></li>
+                            <li><a href="#">beach & resorts</a></li>
+                            <li><a href="#">mountains</a></li>
+                            <li><a href="#">cruises</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="box">
+                    <h1 class="title-footer">book now</h1>
+                    <nav>
+                        <ul>
+                            <li><a href="#">fight</a></li>
+                            <li><a href="#">hotels</a></li>
+                            <li><a href="#">tour</a></li>
+                            <li><a href="#">car rent</a></li>
+                            <li><a href="#">beach & resorts</a></li>
+                            <li><a href="#">mountains</a></li>
+                            <li><a href="#">cruises</a></li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="box">
+                    <nav>
+                        <ul>
+                            <li><i class="fab fa-facebook-f"></i>
+                            </li>
+                            <li><i class="fab fa-instagram"></i>
+                            </li>
+                            <li><i class="fab fa-twitter"></i>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="text-content">
+                <p class="text-center">copyright &copy; all rights reseved | this template is made wiith &hearts; by
+                    colorlib</p>
+            </div>
+        </div>
+    </footer>
+    <script src="{% static 'home/js/js/resposive.js' %}"></script>
+
+</body>
+
+</html>

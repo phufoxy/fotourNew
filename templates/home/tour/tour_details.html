@@ -1,0 +1,164 @@
+{% extends 'home/base.html' %} {% block title %}Tour Details{% endblock %} {% block body %} {% load static %}
+{% load humanize %}
+{% for message in messages %}
+<div class="alert {{ message.tags }} alert-dismissible" role="alert" id="message">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+    {% if message == "Please sign in to book." %}
+    <a href="/login/?next={{ request.path }}" class="lang" key="login">Login</a>
+    {% endif %}
+</div>
+{% endfor %}
+<div id="tours" class="padding-top-bottom">
+    <div class="search-tour" id="search-tour">
+        <!-- <p><a href="#ex1" rel="modal:open" class="btn btn-danger">Book Tour</a></p> -->
+        <a href="#ex2" rel="modal:open" class="btn btn-danger"><i class="fas fa-search-plus"></i></a>
+        <div id="ex2" class="modal" style="width: 100%;">
+            <div class="modal-header">
+                <h3>Find Tour</h3>
+            </div>
+            <form action="{% url 'tour_mutil' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <select class="form-control" name="city_tour">
+                        <option selected="true" value="" disabled="disabled">Choose City</option>
+                        {% for i in tour_city %}
+                        <option value="{{ i.city }}">{{ i.city }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group input-content">
+                    <select class="form-control" name="price" style="background: transparent;">
+                        <option selected="true" value="" disabled="disabled">Choose Price</option>
+                        <option value="1000000">Dưới 1 Triệu</option>
+                        <option value="2000000">Dưới 2 Triệu</option>
+                        <option value="3000000">Dưới 3 Triệu</option>
+                        <option value="4000000">Dưới 4 Triệu</option>
+                        <option value="5000000">Dưới 5 Triệu</option>
+                        <option value="6000000">Dưới 6 Triệu</option>
+                        <option value="50000000">Trên 10 Triệu</option>
+                    </select>
+                </div>
+                <div class="form-group input-content">
+                    <select class="form-control" name="person" style="background: transparent;">
+                        <option selected="true" value="" disabled="disabled">Choose Person</option>
+                        <option value="1 and 2">1 Người </option>
+                        <option value="2 and 3">2 Người</option>
+                        <option value="3 and 5">3 Người -> 5 Người</option>
+                        <option value="5 and 10">5 Người -> 10 Người</option>
+                        <option value="10 and 20">10 Người Trở Lên</option>
+                    </select>
+                </div>
+                <div class="form-group input-content">
+                    <select class="form-control" name="date" style="background: transparent;">
+                        <option selected="true" value="" disabled="disabled">Choose Date</option>
+                        <option value="1">1 Ngày/Đêm</option>
+                        <option value="2">2 Ngày/Đêm</option>
+                        <option value="3">3 Ngày/Đêm</option>
+                        <option value="4">4 Ngày/Đêm</option>
+                        <option value="5">5 Ngày/Đêm</option>
+                        <option value="6">6 Ngày/Đêm</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Search Tour" class="btn btn-danger">
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="boxes_tour">
+        {% for i in sum_place %}
+        <div class="blog-news">
+            {{ i.description|safe }}
+            {{ i.body|safe }}
+        </div>
+        {% endfor %}
+        <div class="author">
+            {% for i in tourer %}
+            <img src="{{ i.avatar.url }}" alt="Person">
+            <div class="description">
+                <h1>{{ i.name }}</h1>
+                <p class="doc_text">{{ i.email }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="post-comment">
+            <h1>Add Tour</h1>
+            <div class="add-book">
+                <!-- Link to open the modal -->
+                <p><a href="#ex1" rel="modal:open" class="btn btn-danger">Book Tour</a></p>
+            </div>
+            <div id="ex1" class="modal" style="width: 100%;">
+                <form action="{% url 'add_tour' tour.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Date To</label>
+                        <input type="date" class="form-control" id="exampleFormControlInput1" name="date">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Name Tour</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" value="{{ tour.name_tour }}"
+                            disabled>
+                    </div>
+                    {% for i in sum_place %}
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Price Total/person</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" value="{{ i.total_price|intcomma }} VNĐ / {{ i.person }} Person"
+                            disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Price Total</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" value="{{ i.sum_price|intcomma }} VNĐ"
+                            disabled>
+                    </div>
+                    {% endfor %}
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Name Book: </label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" name="person_book"
+                            placeholder="Enter Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Phone:</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" name="phone" placeholder="Enter Phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleFormControlInput1">Email:</label>
+                        <input type="text" class="form-control" id="exampleFormControlInput1" name="email" placeholder="Enter Email">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Add book" class="btn btn-danger">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="find-form">
+        <div class="categories">
+            <h1>tour</h1>
+            <ul>
+                {% for i in place_tour %}
+                <li>
+                    <h3>{{ i.name_tour }}/ {{ i.city }} / {{ i.sum_price|intcomma }} VNĐ</h3>
+
+                    <h6>( {{ i.person }} Người / {{ i.date_tour }} Ngày)</h6>
+                    <p> <a href="{% url 'tour_details' i.tour_id  %}" class="btn btn-danger">Seem</a>
+                    </p>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="tab-cloud">
+            <h1>tag clound</h1>
+            <div class="tabs">
+                {% for i in tour_city %}
+                <a href="{% url 'search_tour_place' i.city %}" class="btn border-info">{{ i.city }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="paragraph">
+        </div>
+    </div>
+</div>
+{% endblock %}

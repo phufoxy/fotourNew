@@ -1,0 +1,83 @@
+{% extends 'home/base.html' %} {% block title %}Hotels{% endblock %} {% block body %} {% load static %}
+<div id="book" class="padding-top-bottom">
+    <div class="title-place">
+        <!-- <h1>Book Tour</h1> -->
+    </div>
+    {% if place_tour %}
+    <div class="places">
+        {% for i in place_tour %}
+        <div class="place-items">
+            <div class="title text-center">
+                <h3>{{ i.date_to|date:'h:m.a' }} -- {{ i.date_to|date:'d-m-Y' }}</h3>
+                <h1>{{ i.place.name_place }}</h1>
+                <h2>life style of new</h2>
+            </div>
+            <div class="desctiption">
+                <div class="img-place">
+                    <img src="{{ i.place.image_place.url }}" alt="Image">
+                </div>
+                <div class="info">
+                    <p>Địa Chỉ: {{ i.place.address }} -- {{ i.place.city }} <br>Giá: {{ i.place.price }} vnđ</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+    <div class="houses">
+        <div class="account">
+            <div class="title text-center">
+                <h1>about me</h1>
+            </div>
+            {% for i in tourer %}
+            <div class="info">
+                <img src="{{ i.avatar.url }}" alt="Image">
+                <h1>{{ i.name }}</h1>
+                <h2>{{ i.author }}</h2>
+                <p>{{ i.email }}</p>
+            </div>
+            {% endfor %}
+        </div>
+        {% if house_tour %}
+        <div class="house-place">
+            <div class="title text-center">
+                <h1>House</h1>
+            </div>
+            <div class="boxes">
+                {% for i in house_tour %}
+                <div class="box">
+                    <div class="img-box">
+                        <img src="{{ i.house.image_house.url }}" alt="">
+                    </div>
+                    <div class="desctiption">
+                        <h3>{{ i.date_to|date:'d-m-Y' }} -- {{ i.date_to|date:'h:m.a' }} </h3>
+                        <h1>{{ i.house.name_house }} -- {{ i.house.address }} -- {{ i.house.city }} </h1>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        {% if restaurant_tour %}
+        <div class="house-place">
+            <div class="title text-center">
+                <h1>Restaurants</h1>
+            </div>
+            <div class="boxes">
+                {% for i in restaurant_tour %}
+                <div class="box">
+                    <div class="img-box">
+                        <img src="{{ i.restaurant.image_restaurant.url }}" alt="">
+                    </div>
+                    <div class="desctiption">
+                        <h3>{{ i.date_to|date:'d-m-Y' }} -- {{ i.date_to|date:'h:m.a' }} </h3>
+                        <h1>{{ i.restaurant.name_restaurant }} -- {{ i.restaurant.address }} -- {{ i.house.city }} </h1>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

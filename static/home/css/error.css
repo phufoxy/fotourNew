@@ -1,0 +1,106 @@
+
+@font-face {
+    font-family: 'comfortaa';
+    src: url('../fonts/comfortaa/Comfortaa-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'renogare';
+    src: url('../fonts/renogare/RenogareSoft-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'roboto';
+    src: url('../fonts/roboto/Roboto-Regular.ttf');
+}
+
+body {
+    background: #416475;
+    height: 100%;
+}
+
+.error {
+    position: relative;
+    height: auto;
+    padding: 50px;
+    width: 100%;
+    text-align: center;
+}
+
+.error h1 {
+    color: #ccc;
+    font-family: 'roboto';
+    font-size: 50px;
+    font-weight: bold;
+}
+
+.error p {
+    color: #ccc;
+    font-family: 'comfortaa';
+    font-size: 30px;
+    font-weight: normal;
+    margin-top: 50px;
+}
+
+.error .page_404 span {
+    color: rgba(255, 95, 95, 1);
+    font-size: 150px;
+    font-family: 'roboto';
+    letter-spacing: 50px;
+    text-shadow: 1px 1px 10px #ccc;
+}
+
+@media screen and (max-width:992px) {
+    .error {
+        position: relative;
+        height: auto;
+        padding: 50px 10px 50px 10px;
+        width: 100%;
+        text-align: center;
+    }
+    .error h1 {
+        color: #ccc;
+        font-family: 'roboto';
+        font-size: 40px;
+        font-weight: bold;
+    }
+    .error p {
+        color: #ccc;
+        font-family: 'comfortaa';
+        font-size: 18px;
+        font-weight: normal;
+        margin-top: 50px;
+    }
+    .error .page_404 span {
+        color: rgba(255, 95, 95, 1);
+        font-size: 150px;
+        font-family: 'roboto';
+        letter-spacing: 0px;
+        text-shadow: 1px 1px 10px #ccc;
+    }
+}
+
+.error a {
+    background: #ccc;
+    padding: 10px;
+    text-transform: capitalize;
+    color: #416475;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: 'roboto';
+    border-radius: 2px;
+    text-decoration: none;
+    border: 1px solid rgba(255, 95, 95, 1);
+    transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+}
+
+.error a:hover {
+    background: #416475;
+    color: #ccc;
+    border: 1px solid rgba(255, 95, 95, 1);
+    transition: all 0.5s ease-in-out;
+    -moz-transition: all 0.5s ease-in-out;
+    -webkit-transition: all 0.5s ease-in-out;
+}
