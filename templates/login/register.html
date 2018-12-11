@@ -27,6 +27,11 @@
         <a href="/login/?next={{ request.path }}" class="lang" key="login">Login</a>
         {% endif %}
     </div>
+    <script>
+        $(".alert").delay(5000).slideUp(200, function () {
+            $(this).alert('close');
+        });
+    </script>
     {% endfor %}
     <div class="wrapper">
         <div class="image">

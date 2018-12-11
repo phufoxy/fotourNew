@@ -5,12 +5,10 @@ from django.conf.urls import handler404, handler500, url
 
 urlpatterns = [
     path('house/',views.house,name='house'),
-    path('error/',views.error_page,name='error_page'),
     path('house/<int:id>/',views.house_details,name='house_details'),
     path('house/search/<str:name>/',views.house_search,name='house_search'),
     path('house/search_house/',views.form_search,name='search_house'),
     path('create_comment_house/<int:id>/',views.create_comment_house,name='create_comment_house'),
-    path('create_house_tour/<int:id>/',views.create_house_tour,name='create_house_tour'),
     path('dashboard/home/',views.dashboard_home,name='dashboard_home'),
     path('dashboard/house/',include([
         # houses

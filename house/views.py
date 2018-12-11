@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponse,get_object_or_404, redirect
+from django.shortcuts import render,HttpResponse,get_object_or_404, redirect, HttpResponseRedirect
 from .models import House,House_details,Comment_house
 from tourer.models import Tourer, Account
 from django.template import RequestContext
@@ -13,6 +13,7 @@ from bootstrap_modal_forms.mixins import PassRequestMixin, DeleteAjaxMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import TemplateView
 from tour.models import Tour,PlaceTour,BookTour
+from django.contrib import messages
 
 # Create your views here.
 def house(request):
@@ -55,8 +56,12 @@ def form_search(request):
 def house_search(request,name):
     house_items = House.objects.filter(city=name)
     city = House.objects.values('city').distinct()
-    query_item_1 = "SELECT *,(sum(a.price) * t.person) as sum_price, sum(a.price) as total_price FROM tour_placeTour a inner join tour_tour t on a.tour_id  = t.id group by t.id order by a.id limit 5"
-    place_tour = PlaceTour.objects.raw(query_item_1)
+    query = (
+        "SELECT *,(sum(a.price) * t.person) as sum_price, "
+        " sum(a.price) as total_price FROM tour_placeTour a inner"
+        " join tour_tour t on a.tour_id  = t.id group by t.id order by a.id limit 5"
+    )
+    place_tour = PlaceTour.objects.raw(query)
     idempresa= ''
     if 'account' in request.session:
         idempresa = request.session['account']
@@ -131,32 +136,8 @@ def house_details(request,id):
             }
             return render(request,'home/hotel_details.html',context)
     except House.DoesNotExist as e:
-        return render(request,'error/index.html',{
-            'error':'wrong routing path'
-        })
-    
-
-def create_house_tour(request,id):
-    house_details = House.objects.get(pk=id)
-    # email = request.GET['email']
-    book = request.GET['book']
-    date_to = request.GET['date_to']
-    idempresa= ''
-    if 'account' in request.session:
-        idempresa = request.session['account']
-    else:
-        idempresa=None
-
-    
-    if idempresa == None:
-        return redirect('login')
-    else:
-        try:
-            account_details = Tourer.objects.get(email=idempresa)
-            return redirect('house_details',id=id)
-        except Exception as e:
-            print(e)
-            return redirect('house_details',id=id)
+        messages.error(request, 'Doest Not Exists House.')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
 
 def create_comment_house(request,id):
     house_details = House.objects.get(pk=id)
@@ -168,7 +149,6 @@ def create_comment_house(request,id):
     else:
         idempresa=None
 
-    
     if idempresa == None:
         return redirect('login')
     else:
@@ -181,25 +161,6 @@ def create_comment_house(request,id):
             print(e)
             return redirect('house_details',id=id)
     
-
-def dashboard_form_house(request):
-    idTourer = ''
-    if 'account' in request.session:
-        idTourer = request.session['account']
-    else:
-        idTourer = None
-    
-    if idTourer == None:
-        return render(request,'login/login.html')
-    else:
-        tourer = Account.objects.filter(email=idTourer)
-        house = House.objects.all()
-        context = {
-            'tourer':tourer,
-            'house':house
-        }
-        return render(request,'dashboard/form.html',context)
-
 class ListHouse(generic.ListView):
     template_name = "dashboard/house/index.html"
     context_object_name = 'context'
@@ -302,19 +263,16 @@ def dashboard_home(request):
     if 'account' in request.session:
         idempresa = request.session['account']
     else:
-        idempresa=None
+        idempresa = None
 
     if idempresa == None:
-        return redirect('/login/?next='+ request.path)
+        messages.error(request, 'Please Login To Dashboard.')
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
     else:
         account = Account.objects.get(email=idempresa)
-        author_account = account.author
-        if author_account == "admin" :
+        isAdmin = account.author
+        if isAdmin == 'admin' :
             return redirect('ListPlace')
         else :
-            return render(request,'error/index.html',{
-                'error':'You are not an administrator'
-            })
-
-def error_page(request):
-    return render(request,'error/index.html')
+            messages.error(request, 'You are not an admin.')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))

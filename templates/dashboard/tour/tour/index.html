@@ -15,6 +15,11 @@
     <a href="/login/?next={{ request.path }}" class="lang" key="login">Login</a>
     {% endif %}
 </div>
+<script>
+    $(".alert").delay(5000).slideUp(200, function () {
+        $(this).alert('close');
+    });
+</script>
 {% endfor %}
 <div class="modal-left">
     <button type="button" class="create-book btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i></button>
@@ -33,7 +38,7 @@
             <p>{{i.date_tour }} Ngày</p>
         </div>
         <div class="panel">
-            
+
         </div>
         <div class="edit">
             <button type="button" class="update-book " data-id="{% url 'UpdateTour' i.pk %}" style="background: transparent;border: 0;cursor: pointer;"><i

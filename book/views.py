@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponse,get_object_or_404, redirect
+from django.shortcuts import render,HttpResponse,get_object_or_404, redirect, HttpResponseRedirect
 from tourer.models import Tourer, Account
 from datetime import datetime
 from django.core.files.storage import FileSystemStorage
@@ -11,6 +11,8 @@ from .forms import BookTourForm
 from bootstrap_modal_forms.mixins import PassRequestMixin, DeleteAjaxMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import TemplateView
+from django.contrib import messages
+
 # Create your views here.
 def book(request):
     idempresa= ''
@@ -39,12 +41,8 @@ def book_details(request):
         book_Tour = BookTour.objects.raw(query)
         book_Tour_count = BookTour.objects.filter(accout=account).count()
         if book_Tour_count == 0 :
-            context = {
-                'idempresa':idempresa
-            }
-            return render(request,'error/index.html',{
-                'error':'You Not Tour , please choose tour'
-            })
+            messages.error(request, 'You need to book at least 1 tour .')
+            return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
         else:
             context = {
                 'idempresa':idempresa,

@@ -254,16 +254,6 @@ def changer_avatar(request,email):
             return redirect(request.META.get('HTTP_REFERER')) 
       
 
-from django import template
-from django.template.defaultfilters import stringfilter
-
-register = template.Library()
-# filter
-@register.filter
-def in_place(tour):
-    return PlaceTour.objects.filter(tour=tour).aggregate(Sum('price'))
-
-
 # list tour
 def list_tour(request):
     tour = Tour.objects.annotate(sum_price = Sum(F('person'))).order_by('-id')

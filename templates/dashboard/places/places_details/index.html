@@ -5,6 +5,22 @@
 {% block body %}
 
 {% include "dashboard/_modal.html" %}
+{% for message in messages %}
+<div class="alert {{ message.tags }} alert-dismissible" role="alert" id="message">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    {{ message }}
+    {% if message == "Please sign in to book." %}
+    <a href="/login/?next={{ request.path }}" class="lang" key="login">Login</a>
+    {% endif %}
+</div>
+<script>
+    $(".alert").delay(5000).slideUp(200, function () {
+        $(this).alert('close');
+    });
+</script>
+{% endfor %}
 <div class="modal-left">
     <button type="button" class="create-book btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i></button>
 </div>

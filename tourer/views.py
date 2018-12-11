@@ -25,8 +25,10 @@ def login(request):
 def logout(request):  
     try:
         request.session.pop('account')
+        messages.success(request, 'Logout Success.')
         return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
     except Exception as e:
+        messages.error(request, 'Logout Success.')
         return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
         
 
@@ -34,25 +36,22 @@ def login_form(request):
     if request.POST:
         email = request.POST['email']
         password = request.POST['password']
-        login = 0
-        email_login = ''
-        password_email = ''
-        error = ''
+        isLogin = 0
         try:
-            email_login = Account.objects.get(email=email)
-            login = 1
+            isAccount = Account.objects.get(email=email)
+            isLogin = 1
         except Exception as e:
-            login = 0
+            isLogin = 0
 
-        if login == 1:
-            if sha256_crypt.verify(password,email_login.password) == True:
+        if isLogin == 1:
+            if sha256_crypt.verify(password,isAccount.password) == True:
                 try:
-                    request.session['account'] = email_login.email
+                    request.session['account'] = isAccount.email
+                    messages.success(request, 'Login Success.')
                     return redirect(request.POST['next'])
                 except Exception as e:         
                     return redirect('home')
             else:
-                error = 'Sai Mật Khẩu'
                 messages.error(request, 'Password wrong.')
                 return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
         else:

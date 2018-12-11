@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse, get_object_or_404, redirect
-from .models import Place,PlaceDetails, CommentPlace
+from .models import Place, PlaceDetails, CommentPlace
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from tourer.models import Tourer, Account
 from datetime import datetime
@@ -11,6 +11,7 @@ from .forms import PlaceForm, PlaceDetailForm
 from bootstrap_modal_forms.mixins import PassRequestMixin, DeleteAjaxMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from tour.models import Tour, PlaceTour
+# Dashboard template
 # Place Index
 class Index(generic.ListView):
     model = Place
@@ -37,7 +38,7 @@ class Index(generic.ListView):
             return ctx
     
 
-# Create
+# Create Place
 class PlaceCreateView(PassRequestMixin, SuccessMessageMixin,
                      generic.CreateView):
     template_name = 'dashboard/places/places/create_place.html'
@@ -45,7 +46,7 @@ class PlaceCreateView(PassRequestMixin, SuccessMessageMixin,
     success_message = 'Success: Book was created.'
     success_url = reverse_lazy('ListPlace')
 
-# Update
+# Update Place
 class PlaceUpdateView(PassRequestMixin, SuccessMessageMixin,
                      generic.UpdateView):
     model = Place
@@ -54,23 +55,19 @@ class PlaceUpdateView(PassRequestMixin, SuccessMessageMixin,
     success_message = 'Success: Book was updated.'
     success_url = reverse_lazy('ListPlace')
 
-# Read
+# Read Place
 class PlaceReadView(generic.DetailView):
     model = Place
     template_name = 'dashboard/places/places/read_places.html'
 
-
-
-# Delete
+# Delete Place
 class PlaceDeleteView(DeleteAjaxMixin, generic.DeleteView):
     model = Place
     template_name = 'dashboard/places/places/delete_place.html'
     success_message = 'Success: Place was deleted.'
     success_url = reverse_lazy('ListPlace')
 
-
-
-# places details
+# List places details
 class ListPlaceDetails(generic.ListView):
     model = PlaceDetails
     template_name = "dashboard/places/places_details/index.html"
@@ -95,6 +92,7 @@ class ListPlaceDetails(generic.ListView):
             ctx['tourer'] = tourer
             return ctx
 
+# Add Place Details
 class AddPlaceDetails(PassRequestMixin, SuccessMessageMixin,
                      generic.CreateView):
     template_name = 'dashboard/places/places_details/create_place_details.html'
@@ -102,6 +100,7 @@ class AddPlaceDetails(PassRequestMixin, SuccessMessageMixin,
     success_message = 'Success: Book was created.'
     success_url = reverse_lazy('ListPlaceDetails')
 
+# Update Place Details
 class UpdatePlaceDetails(PassRequestMixin, SuccessMessageMixin,
                      generic.UpdateView):
     model = PlaceDetails
@@ -110,6 +109,8 @@ class UpdatePlaceDetails(PassRequestMixin, SuccessMessageMixin,
     success_message = 'Success: Book was updated.'
     success_url = reverse_lazy('ListPlaceDetails')
 
+
+# Delete Place Details
 class DeletePlaceDetails(DeleteAjaxMixin, generic.DeleteView):
     model = PlaceDetails
     template_name = 'dashboard/places/places_details/_delete.html'
@@ -121,23 +122,29 @@ class DeletePlaceDetails(DeleteAjaxMixin, generic.DeleteView):
         messages.success(self.request, self.success_message)
         return super(DeletePlaceDetails, self).delete(request, *args, **kwargs)
 
-# Read
+# Read Place Details
 class PlaceDetailsReadView(generic.DetailView):
     model = PlaceDetails
     template_name = 'dashboard/places/places_details/_read.html'
 
-
+# Home Template
+# List template
 def index(request):
+    # get all place
     place = Place.objects.order_by('-id')
+    # get disticnt city in place
     city = Place.objects.values('city').distinct()
+    # get all tour
     tour = Tour.objects.order_by('-id')[:5]
+    # get all place tour
     place_tour = Place.objects.all().order_by('-price')[:5]
+    # check session 
     idempresa= ''
     if 'account' in request.session:
         idempresa = request.session['account']
     else:
-        idempresa=None
-        
+        idempresa = None
+    # panigation
     page = request.GET.get('page', 1)
 
     paginator = Paginator(place, 10)
@@ -149,9 +156,11 @@ def index(request):
         users = paginator.page(paginator.num_pages)
 
     try:
+        # get account = email 
         account = Account.objects.get(email=idempresa)
-        author_account = account.author
-        if author_account == "admin" :
+        # check account is admin
+        isAdmin = account.author
+        if isAdmin == "admin" :
             context = { 
                 'idempresa':idempresa,
                 'place':users,
@@ -168,7 +177,6 @@ def index(request):
                 'city':city,
                 'tour':tour,
                 'place_tour':place_tour
-
             }
             return render(request,'home/places/places.html',context)
     except  Exception as e:

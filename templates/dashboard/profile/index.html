@@ -1,7 +1,7 @@
 {% extends 'home/base.html' %} {% block title %}Profiles{% endblock %} {% block body %} {% load static %}
 {% load humanize %}
 {% for message in messages %}
-<div class="alert {{ message.tags }} alert-dismissible" role="alert" id="message">
+<div class="alert {{ message.tags }} alert-dismissible" role="alert" id="message" data-auto-dismiss="1">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -10,6 +10,11 @@
     <a href="/login/?next={{ request.path }}" class="lang" key="login">Login</a>
     {% endif %}
 </div>
+<script>
+    $(".alert").delay(5000).slideUp(200, function () {
+        $(this).alert('close');
+    });
+</script>
 {% endfor %}
 <div id="ex2" class="modal" style="width: 100%;">
     <div class="modal-header">

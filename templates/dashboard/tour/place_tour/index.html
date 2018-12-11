@@ -15,6 +15,11 @@
     <a href="/login/?next={{ request.path }}" class="lang" key="login">Login</a>
     {% endif %}
 </div>
+<script>
+    $(".alert").delay(5000).slideUp(200, function () {
+        $(this).alert('close');
+    });
+</script>
 {% endfor %}
 <div class="modal-left">
     <button type="button" class="create-book btn btn-primary" data-toggle="modal" data-target="#exampleModal"> <i class="fas fa-plus"></i></button>
@@ -23,7 +28,7 @@
     {% for i in context %}
     <div class="box">
         <div class="img">
-            <img src="{{ i.image_place.url }}" alt="Box">
+            <img src="{{ i.tour.image_tour.url }}" alt="Box">
         </div>
         <div class="desciption">
             <h2 class="text-center">{{ i.title }}</h2>
