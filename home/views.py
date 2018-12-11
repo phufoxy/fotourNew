@@ -58,8 +58,6 @@ def home(request):
             }
             return render(request,'home/home.html',context)
         else:
-            uery_details = "SELECT t.*,b.*,sum(p.price) as total_price,(sum(p.price) * t.person) as sum_price FROM tour_tour t  inner join tour_placetour p on t.id=p.tour_id inner join  tour_booktour b on b.tour_id = t.id where b.accout_id =  '" + idempresa + "'" +" group by t.id"
-            bookTour = BookTour.objects.raw(query_details)
             tour_city = Tour.objects.raw("SELECT  city,id from tour_tour group by city")
             context = {
                 'context':tour,
@@ -67,7 +65,6 @@ def home(request):
                 'houses':houses,
                 'tour_city':tour_city,
                 'place_context':place_context,
-                'booktotal':booktotal
             }
             return render(request,'home/home.html',context)
   

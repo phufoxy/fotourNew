@@ -485,7 +485,7 @@ body {
     border-radius: 4px;
 }
 
-#panel .img-nitro button {
+#panel .img-nitro a {
     position: absolute;
     left: 100%;
     top: 50%;
@@ -497,7 +497,7 @@ body {
     -webkit-transform: translate(-50%, -50%);
 }
 
-#panel .img-nitro button i {
+#panel .img-nitro a i {
     font-size: 20px;
     color: #fff;
 }
@@ -539,7 +539,7 @@ body {
         height: 666px;
         border-radius: 4px;
     }
-    #panel .img-nitro button {
+    #panel .img-nitro a {
         position: absolute;
         left: 50%;
         top: 50%;
@@ -550,7 +550,7 @@ body {
         -moz-transform: translate(-50%, -50%);
         -webkit-transform: translate(-50%, -50%);
     }
-    #panel .img-nitro button i {
+    #panel .img-nitro a i {
         font-size: 20px;
         color: #fff;
     }
@@ -2276,6 +2276,11 @@ footer .footer-header .box a {
     text-transform: capitalize;
 }
 
+footer .footer-header .box a:hover {
+    text-decoration: none;
+    color: #FF9F55;
+}
+
 footer .footer-header .box li {
     display: inline-table;
     width: 100%;
@@ -2283,16 +2288,20 @@ footer .footer-header .box li {
 }
 
 footer .footer-header .box:nth-child(5) li {
-    display: inline;
+    position: relative;
+    width: 40px;
+    border-radius: 100%;
 }
 
-footer .footer-header .box li i {
-    background: #828282;
-    font-size: 14px;
+footer .footer-header .box:nth-child(5) li i {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 24px;
     padding: 14px;
     border-radius: 100%;
     color: #fff;
-    margin-left: 5px;
     transition: all 0.5s ease-in-out;
     -moz-transition: all 0.5s ease-in-out;
     -webkit-transition: all 0.5s ease-in-out;
@@ -2300,9 +2309,6 @@ footer .footer-header .box li i {
 
 footer .footer-header .box li:hover i {
     color: red;
-    transform: rotate3d(0, 1, 1.5, 90deg);
-    -moz-transform: rotate3d(0, 1, 1.5, 90deg);
-    -webkit-transform: rotate3d(0, 1, 1.5, 90deg);
     transition: all 0.5s ease-in-out;
     -moz-transition: all 0.5s ease-in-out;
     -webkit-transition: all 0.5s ease-in-out;
