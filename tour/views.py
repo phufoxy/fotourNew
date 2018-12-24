@@ -315,7 +315,8 @@ def add_tour(request,id):
             return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
         else:
             try:
-                isBook= BookTour.objects.filter(tour=tour.id)
+                isAccount = Account.objects.get(email = idempresa)
+                isBook= BookTour.objects.filter(tour=tour.id,accout=isAccount)
                 if isBook.count() > 0:
                     messages.error(request, 'Tour has been created')
                     return redirect(request.META.get('HTTP_REFERER')) 
