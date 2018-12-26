@@ -9,6 +9,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('house', '0060_auto_20181207_1957'),
+        ('tourer', '__latest__'),
     ]
 
     operations = [
