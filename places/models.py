@@ -4,7 +4,6 @@ from tourer.models import Tourer, Account
 from django.urls import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
 from ckeditor.fields import RichTextFormField
-from djrichtextfield.models import RichTextField
 
 # Create your models here.
 class TypePlace(models.Model):
