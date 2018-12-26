@@ -22,7 +22,7 @@
 </script>
 {% endfor %}
 <div class="modal-left">
-    <button type="button" class="create-book btn btn-primary" data-toggle="modal" data-target="#exampleModal"> <i class="fas fa-plus"></i></button>
+    <a href="{% url 'AddPlaceTour' %}" class="create-book btn btn-primary" > <i class="fas fa-plus"></i></a>
 </div>
 <div class="boxes">
     {% for i in context %}
@@ -40,9 +40,9 @@
         <div class="panel">
         </div>
         <div class="edit">
-            <button type="button" class="update-book " data-id="{% url 'UpdatePlaceTour' i.pk %}" style="background: transparent;border: 0;cursor: pointer;"><i
+            <a class="update-book " href="{% url 'UpdatePlaceTour' i.pk %}"><i
                     class="fas fa-edit"></i>
-            </button>
+            </a>
             <button type="button" class="delete-book " data-id="{% url 'DeletePlaceTour' i.pk %}" style="background: transparent;border: 0;cursor: pointer;">
                 <i class="fa fa-trash"></i>
             </button>

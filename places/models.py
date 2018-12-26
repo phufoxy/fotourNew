@@ -3,7 +3,9 @@ from datetime import datetime
 from tourer.models import Tourer, Account
 from django.urls import reverse
 from ckeditor_uploader.fields import RichTextUploadingField
-from ckeditor.fields import RichTextField
+from ckeditor.fields import RichTextFormField
+from djrichtextfield.models import RichTextField
+
 # Create your models here.
 class TypePlace(models.Model):
     TYPE_PLACE = (
@@ -33,12 +35,17 @@ class TypePlace(models.Model):
     class Meta:
         abstract = True
 
+
+#  implement a prototype pattern
+# factory
 class Place(TypePlace):
     name_place = models.CharField(max_length=250)
     image_place = models.FileField(upload_to = 'place/',default='/default/user-avatar-default-165.png')
     review = models.IntegerField(default=0)
     star = models.FloatField(default=0)
     price = models.FloatField(default=0,null=True,blank=True)
+    content = models.CharField(max_length=1250)
+
 
     def get_absolute_url(self):
         return reverse('ListPlace')
@@ -79,3 +86,6 @@ class CommentPlace(ItemComment):
 class Email(models.Model):
     name = models.CharField(max_length=250)
     email = models.CharField(max_length=250)
+
+class Products(models.Model):
+    content = RichTextFormField()

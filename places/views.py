@@ -11,6 +11,8 @@ from .forms import PlaceForm, PlaceDetailForm
 from bootstrap_modal_forms.mixins import PassRequestMixin, DeleteAjaxMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from tour.models import Tour, PlaceTour
+from . import forms
+
 # Dashboard template
 # Place Index
 class Index(generic.ListView):
@@ -37,6 +39,14 @@ class Index(generic.ListView):
             ctx['tourer'] = tourer
             return ctx
     
+class CkEditorFormView(generic.FormView):
+    form_class = forms.CkEditorForm
+    template_name = 'form.html'
+
+    def get_success_url(self):
+        return reverse('ckeditor-form')
+
+ckeditor_form_view = CkEditorFormView.as_view()
 
 # Create Place
 class PlaceCreateView(PassRequestMixin, SuccessMessageMixin,
@@ -67,6 +77,8 @@ class PlaceDeleteView(DeleteAjaxMixin, generic.DeleteView):
     success_message = 'Success: Place was deleted.'
     success_url = reverse_lazy('ListPlace')
 
+
+# implement a factory pattern
 # List places details
 class ListPlaceDetails(generic.ListView):
     model = PlaceDetails
@@ -104,7 +116,7 @@ class AddPlaceDetails(PassRequestMixin, SuccessMessageMixin,
 class UpdatePlaceDetails(PassRequestMixin, SuccessMessageMixin,
                      generic.UpdateView):
     model = PlaceDetails
-    template_name = 'dashboard/places/places/update_place.html'
+    template_name = 'dashboard/places/places_details/create_place_details.html'
     form_class = PlaceDetailForm
     success_message = 'Success: Book was updated.'
     success_url = reverse_lazy('ListPlaceDetails')

@@ -12,5 +12,9 @@ class HouseDetailsForm(PopRequestMixin, CreateUpdateAjaxMixin, forms.ModelForm):
     class Meta:
         model = House_details
         exclude = ['timestamp']
+    
+    def __init__(self, *args, **kwargs):
+        super(HouseDetailsForm, self).__init__(*args, **kwargs)
+        self.fields['house'].widget.attrs.update({'class' : 'form-control'})
 
 

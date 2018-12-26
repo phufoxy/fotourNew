@@ -31,6 +31,7 @@ urlpatterns = [
     path('',include('learn.urls')),
     path('',include('tour.urls')),
     path('ckeditor/',include('ckeditor_uploader.urls')),
+    path('djrichtextfield/', include('djrichtextfield.urls'))
 
 ]
 

@@ -14,16 +14,13 @@
         {{ placedetails.place.name_place }}
     </div>
     <div class="">
-        <img src="{{ placedetails.img_status.url }}" alt="" width="100px" height="100px">
-    </div>
-    <div class="">
         Title:
         {{ placedetails.title }}
         view
     </div>
     <div class="">
-        start_status:
-        {{ placedetails.start_status }}
+        Body:
+        {{ placedetails.body.safe }}
     </div>
     <div class="">
         End_status:

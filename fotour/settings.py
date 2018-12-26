@@ -168,3 +168,4 @@ CKEDITOR_CONFIGS = {
     },
 }
 CKEDITOR_IMAGE_BACKEND = 'pillow'
+

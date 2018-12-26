@@ -22,13 +22,12 @@
 </script>
 {% endfor %}
 <div class="modal-left">
-    <button type="button" class="create-book btn btn-primary" data-toggle="modal" data-target="#exampleModal"><i class="fas fa-plus"></i></button>
+    <a href="{% url 'AddPlaceDetails' %}" class="create-book btn btn-primary"><i class="fas fa-plus"></i></a>
 </div>
 <div class="boxes">
     {% for i in context %}
     <div class="box">
         <div class="img">
-            <img src="{{ i.img_status.url }}" alt="Box">
         </div>
         <div class="desciption">
             <h2 class="text-center">{{ i.place.name_place }}</h2>
@@ -42,9 +41,7 @@
             </ul> -->
         </div>
         <div class="edit">
-            <button type="button" class="update-book " data-id="{% url 'UpdatePlaceDetails' i.pk %}" style="background: transparent;border: 0;cursor: pointer;"><i
-                    class="fas fa-edit"></i>
-            </button>
+            <a href="{% url 'UpdatePlaceDetails' i.id %}" class="update-book "><i class="fas fa-edit"></i></a>
             <button type="button" class="delete-book " data-id="{% url 'DeletePlaceDetails' i.pk %}" style="background: transparent;border: 0;cursor: pointer;">
                 <i class="fa fa-trash"></i>
             </button>

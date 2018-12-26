@@ -12,6 +12,7 @@ urlpatterns = [
         path('create_place_tour/<int:id>/',views.create_place_tour,name='create_place_tour'),
         path('search/<str:name>/',views.search_place,name='search_place'),
         path('search_places/',views.search_form,name='searchform'),
+        path('hello/', views.ckeditor_form_view, name='ckeditor-form'),
         
     ])),
     # dashboard
